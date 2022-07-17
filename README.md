@@ -22,6 +22,18 @@ public class Manager extends Person {
 
 ### (A)
 
+웃기게도 이걸 구현하는 것을 찾기 귀찮아서 미루고 있었다...
+하지만 언제까지 미루고 있을 수 는 없어서 미루다 미루다 다시 붙잡았는데 너무 쉬워서 어이가 없다.
+
+```Java
+public class Manager extends Person {
+
+	public Manager(String ID, String name, String passward) {
+		super(ID, name, passward);
+		// TODO Auto-generated constructor stub
+	}
+}
+```
 #
 
 ```Java
