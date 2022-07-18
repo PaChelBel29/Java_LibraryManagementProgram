@@ -56,13 +56,28 @@ public class Member extends Person {
  }
 }
 ```
+해쉬맵을 잘 몰라서 다양한 함수를 알 수 있었다. 
 
 ### (B)
+
+```Java
+public Member(String ID, String name, String passward) {
+	super(ID, name, passward);
+}
+```
 
 #
 
 ### (C)
 
+```Java
+ HashMap<String, Book> getbookHash(){ return bookHash; }
+
+ void PrintRentalList() {
+ 	system.out.println(bookHash.values());
+ }
+}
+```
 #
 
 ```Java
