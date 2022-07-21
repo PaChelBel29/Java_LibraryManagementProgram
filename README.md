@@ -146,12 +146,13 @@ memberManage = new MemberManage();
 나중에 사용할 기본탑재 소스를 사용한다.
 ```Java
  public void MemberRun(Person person) { // 회원
+	 Member m = new Member(person.getID(), person.getName(), person.getPassward());
 	 int op=scanner.nextInt();
 	 switch(op) {
 	 case(1): bookManage.printBookList();
 	 case(2):bookManage.RentalBook(null);
 	 case(3):bookManage.ReturnBook(null);
-	 case(4):bookManage.
+	 case(4):m.PrintRentalList();
 	 case(5):break;
 	 }
  }
