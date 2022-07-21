@@ -150,8 +150,8 @@ memberManage = new MemberManage();
 	 int op=scanner.nextInt();
 	 switch(op) {
 	 case(1): bookManage.printBookList();
-	 case(2):bookManage.RentalBook(null);
-	 case(3):bookManage.ReturnBook(null);
+	 case(2): bookManage.RentalBook(m);
+	 case(3):bookManage.ReturnBook(m);
 	 case(4):m.PrintRentalList();
 	 case(5):break;
 	 }
