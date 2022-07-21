@@ -124,10 +124,38 @@ memberManage = new MemberManage();
 #
 
 ### (D)
-
+나중에 사용할 기본탑재 소스를 사용한다.
+```Java
+ public void ManagerRun(Person person) { // 관리자
+	 while(true) {
+	 int op=scanner.nextInt();
+	 switch(op) {
+	 case(1): bookManage.printBookList();
+	 case(2):bookManage.AddBook();
+	 case(3):bookManage.UpdateBookStock();
+	 case(4):memberManage.PrintMemberList();
+	 case(5):break;
+	 }
+	 
+	 }
+ }
+```
 #
 
 ### (E)
+나중에 사용할 기본탑재 소스를 사용한다.
+```Java
+ public void MemberRun(Person person) { // 회원
+	 int op=scanner.nextInt();
+	 switch(op) {
+	 case(1): bookManage.printBookList();
+	 case(2):bookManage.RentalBook(null);
+	 case(3):bookManage.ReturnBook(null);
+	 case(4):bookManage.
+	 case(5):break;
+	 }
+ }
+```
 
 #
 
