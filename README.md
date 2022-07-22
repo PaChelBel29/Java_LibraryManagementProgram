@@ -23,7 +23,7 @@ public class Manager extends Person {
 ### (A)
 
 웃기게도 이걸 구현하는 것을 찾기 귀찮아서 미루고 있었다...
-하지만 언제까지 미루고 있을 수 는 없어서 미루다 미루다 다시 붙잡았는데 너무 쉬워서 어이가 없다.
+이클립스가 나보다 코딩 잘하는 것 같다. 자바 공부 열심히 해야겠다고 느꼈다.
 
 ```Java
 public class Manager extends Person {
@@ -59,14 +59,14 @@ public class Member extends Person {
 
 
 ### (B)
-해쉬맵을 잘 몰라서 다양한 함수를 알 수 있었다. 
+해쉬맵을 처음으로 마주했던 코드다. 나는 해쉬맵을 이 때 인스턴스 선언하는 것을 까먹고 뒤늦게 고생하게 되었다.
 ```Java
 public Member(String ID, String name, String passward) {
 	super(ID, name, passward);
 }
 ```
 ###(B-2)
-해쉬맵도 초기화 선언 하는 것을 잊어서 한참을 해매고 고생했다.
+해쉬맵도 인스턴스 선언 하는 것을 잊어서 한참을 해매고 고생했다. 무려 이 문제를 찾는데 2시간을 소비했다...
 ```Java
 public Member(String ID, String name, String passward) {
 		super(ID,name, passward);
@@ -76,7 +76,7 @@ public Member(String ID, String name, String passward) {
 #
 
 ### (C)
-
+이것 또한 pdf를 볼 생각 안하고 생각없이 만들어서 규격에 맞지도 않고 그냥 value만 출력하는 함수였다.
 ```Java
  HashMap<String, Book> getbookHash(){ return bookHash; }
 
@@ -170,6 +170,14 @@ memberManage = new MemberManage();
 
 ### (E)
 나중에 사용할 기본탑재 소스를 사용한다.
+
+(마지막 까지 수정하는 것에 실패 한 코드)
+
+이 코드는 끝까지 해결하지 못해 교수님께 답변을 받고 싶은 코드다.
+
+먼저 문제점은 Person 데이터 타입을 받았는데 Member의 private타입으로 보호받는 bookHash를 받아오는 방법이 없다.
+
+그래서 그냥 인스턴스로 받아오는 아무것도 들어있지 않은 HashMap인 bookHash만 사용했다.
 ```Java
  public void MemberRun(Person person) { // 회원
 	 Member m = new Member(person.getID(), person.getName(), person.getPassward());
@@ -254,6 +262,8 @@ void printBookList() {
 
 #
 ### (G)
+null을 사용하는 것 보단 containkey를 사용하는 것이 좋다고 뒤늦게 느꼈다. 하지만 이미 쓴 코드를 수정하기엔 귀찮았다.
+
 ```Java
  boolean AddBook() {
 	 System.out.print("책 번호 입력 >>");
@@ -281,6 +291,8 @@ void printBookList() {
 #
 ### (H)
 
+그나마 쉬웠던 코드다 book클래스의 함수를 사용하기만 하면 문제 없었기 때문이다.
+
 ```Java
  boolean UpdateBookStock() {
 	 System.out.print("책 번호 입력 >>");
@@ -303,6 +315,7 @@ void printBookList() {
 ```
 #
 ### (I)
+NPE 문제가 발생해서 null 비교문이 문제인줄 알아서 개선하려고 I-2 를 만들었으나 문제가 아니었다!!
 ```Java
 boolean ReturnBook(Member member) {
 	 System.out.print("반납할 도서 번호 입력 >>");
@@ -371,7 +384,7 @@ boolean RentalBook(Member member) {
 }
 ```
 ###(J-2)
-(I-2)와 같은 이유로 NPE가 많이 발생했었다.
+(I-2)와 같은 이유로 NPE가 많이 발생했다 생각했다.
 ```Java
 boolean RentalBook(Member member) {
 	 System.out.print("대출할 도서 번호 입력 >>");
@@ -437,6 +450,8 @@ public class MemberManage {
 
 #
 ### (K)
+ID루프를 생각하는 것이 조금 고민이었다.
+
 ```Java
 public void signup() {
 	 System.out.print("ID를 입력>>");
@@ -462,6 +477,7 @@ public void signup() {
 ```
 #
 ### (L)
+
 ```Java
 public Member Login() {
 	 System.out.print("ID를 입력>>");
@@ -486,6 +502,7 @@ public Member Login() {
 ```
 #
 ### (M)
+Set과 for문은 출력이 참 편한 것 같아서 좋은 것 같다.
 ```Java
 public void PrintMemberList() {
 	 Set<String> keys = memberHash.keySet();
@@ -558,6 +575,7 @@ public static void printMemberMenu() {
 
 #
 ### (N)
+Main함수는 항상 귀찮은 것 같다.
 ```Java
 while (true) {
  printMainMenu();
@@ -654,6 +672,7 @@ public static void printMainMenu() {
 ```
 #
 ### (Q)
+진짜 MemberRun함수 완벽한 구현이 너무 아쉽다 추가 함수를 사용해야하나 고민까지 했다.
 ```Java
 public static void printMemberMenu() {
  // (Q)
@@ -662,7 +681,7 @@ public static void printMemberMenu() {
  }
 }
 ```
-####마무리
+##마무리
 
 교수님의 4개의 과제중 두번째 과제가 끝났다. 시간계획에 맞춰보면 상당히 무난하게 흘러가는 것 같다고 생각한다.
 
@@ -676,10 +695,14 @@ MemberRun이 지금 person을 인자로 받기 때문에 member의 bookHash를 �
 이걸 보완하는 방법을 찾아야 할 것 같다.
 
 # 배운점
-학기중에 배운 것 보다 지금 과제로 고생하면서 공부하는게 더 많이 도움 되는 것 같다. 
-
 HashMap에 대해서 아주 진하게 배운 것 같다. 
 
 NPE에 대해서도 아주 호되게 당한 것 같다.
+
+HashMap의 함수들과 Set에 범용이 편했고 for문도 같이 사용 할 수 있어서 아주 좋았다.
+
+#
+
+학기중에 배운 것 보다 지금 과제로 고생하면서 공부하는게 더 많이 도움 되는 것 같다. 
 
 나중에는 또 어떤 고행이 기다리고 있을 지 기대된다.
