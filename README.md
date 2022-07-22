@@ -380,13 +380,63 @@ public class MemberManage {
 
 #
 ### (K)
+```Java
+public void signup() {
+	 System.out.print("ID를 입력>>");
+	 String ID=scanner.next();
+	 System.out.print("이름을 입력>>");
+	 String name=scanner.next();
+	 System.out.print("비밀번호를 입력>>");
+	 String pw=scanner.next();
+	 while(true) {
+		 if(memberHash.get(ID).getID()!=null) {
+			 System.out.println("이미 존재하는 ID입니다. 다른 ID를 입력해주세요.");
+			 System.out.print("ID를 입력>>");
+			 ID=scanner.next();
+	 	}
+		 else {
+			 memberHash.put(ID, new Member(ID,name,pw));
+			 System.out.println("계정이 생성되었습니다.");
+			 break;
+		 }
+	 }
 
+ }
+```
 #
 ### (L)
-
+```Java
+public Member Login() {
+	 System.out.print("ID를 입력>>");
+	 String ID=scanner.next();
+	 if(memberHash.get(ID)==null) {
+		 System.out.println("존재하지 않는 계정입니다.");
+		 return null;
+	 }
+	 else {
+		 System.out.print("비밀번호를 입력>>");
+		 String pw=scanner.next();
+		 if(memberHash.get(ID).getPassward().equals(pw)) {
+			 System.out.println("로그인 성공");
+			 return memberHash.get(ID);
+		 }
+		 else {
+			 System.out.print("비밀번호가 일치하지 않습니다.");
+			 return null;
+		 }
+	 }
+ }
+```
 #
 ### (M)
-
+```Java
+public void PrintMemberList() {
+	 Set<String> keys = memberHash.keySet();
+	 for(String i : keys) {
+		 System.out.println("이름: "+memberHash.get(i).getName()+", ID: "+memberHash.get(i).getID());
+	 }
+ }
+```
 #
 
 ```Java
