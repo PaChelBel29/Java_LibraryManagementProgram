@@ -3,7 +3,7 @@
 ### 개요
 방학동안 진행하는 프로젝트 두번째, 도서관을 관리하는 프로그램을 Java로 구현한다
 
-2022.07.11 - 
+2022.07.11 - 2022.07.23
 
 ### 목표
 도서관 관리 프로그램을 Java로 구현한다.
@@ -65,7 +65,14 @@ public Member(String ID, String name, String passward) {
 	super(ID, name, passward);
 }
 ```
-
+###(B-2)
+해쉬맵도 초기화 선언 하는 것을 잊어서 한참을 해매고 고생했다.
+```Java
+public Member(String ID, String name, String passward) {
+		super(ID,name, passward);
+		this.bookHash=new HashMap<String, Book>();
+}
+```
 #
 
 ### (C)
@@ -312,7 +319,26 @@ boolean ReturnBook(Member member) {
 
  }
 ```
+###(I-2)
+containKey라는 함수를 사용했다 null을 그냥 사용하기엔 적절하지 않은 것 같다.
 
+그리고 B-2를 수정하기 전이라서 NPE가 나왔다...
+```Java
+boolean ReturnBook(Member member) {
+	 System.out.print("반납할 도서 번호 입력 >>");
+	 String book_number=scanner.next();
+	 if(member.getbookHash().containsKey(book_number)) {
+		 bookHash.get(book_number).updateStock(1);
+		 member.getbookHash().remove(book_number);
+		 System.out.println("[도서번호 :"+ bookHash.get(book_number).getBookNumber()
+				 +"+"+bookHash.get(book_number).getName()+"]이 정상적으로 반납되었습니다.");
+		 return true;
+	 }
+	 else {
+		 System.out.println("도서 번호가 일치하지 않거나 대여하지 않았습니다.");
+		 return false;
+	 }
+```
 #
 ### (J)
 조건문이 까다로웠다
@@ -344,6 +370,37 @@ boolean RentalBook(Member member) {
  }
 }
 ```
+###(J-2)
+(I-2)와 같은 이유로 NPE가 많이 발생했었다.
+```Java
+boolean RentalBook(Member member) {
+	 System.out.print("대출할 도서 번호 입력 >>");
+	 String book_number=scanner.next();
+	 if(member.getbookHash().containsKey(book_number)) {
+		 System.out.println("이미 대여한 도서입니다.");
+		 return false;
+	 }
+	 else {
+		 if(member.getbookHash().get(book_number)==null) {
+			 if(bookHash.get(book_number).getStock()>=0) {
+				 member.getbookHash().put(book_number, bookHash.get(book_number));
+			 bookHash.get(book_number).updateStock(-1);
+			 System.out.println("[도서번호 :"+ bookHash.get(book_number).getBookNumber()
+					 +", 도서 제목 :"+bookHash.get(book_number).getName()+"]이 정상적으로 대여되었습니다.");
+			 return true;
+			 }
+			 else {
+				 System.out.println("도서가 현재 전부 대여중입니다. \n나중에 이용해주세요.");
+				 return false;
+			 }
+		 }
+		 else {
+			 System.out.println("도서 번호가 일치하지 않거나 존재하지 않습니다.");
+			 return false;
+		 }
+	 }
+```
+
 #
 
 ```Java
@@ -502,7 +559,7 @@ public static void printMemberMenu() {
 #
 ### (N)
 ```Java
- while (true) {
+while (true) {
  printMainMenu();
  System.out.print("입력 >> ");
  int selectNum = scanner.nextInt();
@@ -518,7 +575,6 @@ public static void printMemberMenu() {
 	 }
 	 else {
 		 System.out.println("ID 또는 비밀번호 불일치. 로그인 실패.");
-		 printMainMenu();
 		 continue;
 	 }
  // 로그인 후 이용 가능. 정보가 일치하지 않으면 초기메뉴로...
@@ -546,9 +602,21 @@ public static void printMemberMenu() {
 		 System.out.print("입력 >> ");
 		 selectNum = scanner.nextInt();
 		 if (selectNum == 1) {
-			 printManagerMenu();
+			 libManager.memberManage.signup();
 		 }
 		 else if(selectNum==2){
+			 currentPerson=libManager.memberManage.Login();
+		 }
+		 else if (selectNum==3) {
+			 if(currentPerson==null) {
+				 System.out.println("로그인 후 이용해주세요.");
+			 }
+			 else {
+				 printMemberMenu();
+			 }
+		 }
+		 else if (selectNum==4) {
+			 System.out.println("로그아웃");
 			 currentPerson = null;
 			 break;
 		 }
@@ -594,3 +662,24 @@ public static void printMemberMenu() {
  }
 }
 ```
+####마무리
+
+교수님의 4개의 과제중 두번째 과제가 끝났다. 시간계획에 맞춰보면 상당히 무난하게 흘러가는 것 같다고 생각한다.
+
+#아쉬운점
+가장 아쉬운 점은 지금 로그인 했던 회원이 로그아웃하면 다시 그 회원의 bookHash를 가져오지 못했다는 것이 아쉽다.
+
+MemberRun이 지금 person을 인자로 받기 때문에 member의 bookHash를 가져올 수 없다.
+
+상속으로 만든다고 해도 새로운 HashMap이 생성되기 때문이다.
+
+이걸 보완하는 방법을 찾아야 할 것 같다.
+
+# 배운점
+학기중에 배운 것 보다 지금 과제로 고생하면서 공부하는게 더 많이 도움 되는 것 같다. 
+
+HashMap에 대해서 아주 진하게 배운 것 같다. 
+
+NPE에 대해서도 아주 호되게 당한 것 같다.
+
+나중에는 또 어떤 고행이 기다리고 있을 지 기대된다.
