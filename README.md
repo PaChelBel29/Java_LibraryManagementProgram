@@ -143,9 +143,9 @@ memberManage = new MemberManage();
 ```Java
  public void ManagerRun(Person person) { // 관리자
 	 while(true) {
-		 System.out.println("----------------------------------------------------------------------------");
+		 System.out.println("-----------------------------------------------------------------------------------");
 		 System.out.println( "1. 전체 도서 목록 출력 | 2. 도서 등록 | 3. 도서 재고 추가 | 4. 회원 목록 보기 | 5. 돌아가기");
-		 System.out.println("----------------------------------------------------------------------------");
+		 System.out.println("-----------------------------------------------------------------------------------");
 		 System.out.print(">>");
 		 int op=scanner.nextInt();
 		 switch(op) {
@@ -166,10 +166,11 @@ memberManage = new MemberManage();
 ```Java
  public void MemberRun(Person person) { // 회원
 	 Member m = new Member(person.getID(), person.getName(), person.getPassward());
-	 while(true) {
-		 System.out.println("----------------------------------------------------------------------------");
+		 while(true) {
+		 System.out.println("-----------------------------------------------------------------------------------");
 		 System.out.println( "1. 전체 도서 목록 출력 | 2. 도서 대여 | 3. 도서 반납 | 4. 대여 도서 목록 | 5. 돌아가기");
-		 System.out.println("----------------------------------------------------------------------------");
+		 System.out.println("-----------------------------------------------------------------------------------");
+		 System.out.print(">>");
 		 int op=scanner.nextInt();
 		 switch(op) {
 		 case(1): bookManage.printBookList();
