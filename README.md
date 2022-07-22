@@ -37,7 +37,7 @@ public class Manager extends Person {
 #
 
 ```Java
-import java.util.HashMap;
+import java.util.*;
 
 public class Member extends Person {
 
@@ -78,6 +78,21 @@ public Member(String ID, String name, String passward) {
  }
 }
 ```
+### (C-2)
+(C)를 잘못 구현했다. 
+Set이라고 하는 자료구조를 사용했고, for 문에서 사용하기 위해서 사용했다.
+수정 코드
+
+```Java
+HashMap<String, Book> getbookHash(){ return bookHash; }
+ void PrintRentalList() {
+Set<String> keys = bookHash.keySet();
+	 for(String i : keys) {
+		 System.out.println("도서 번호: "+bookHash.get(i).getBookNumber()+", 도서 명: "+bookHash.get(i).getName()+"도서 장르: "+bookHash.get(i).getGenre());
+	 }
+ }
+```
+
 #
 
 ```Java
@@ -128,13 +143,17 @@ memberManage = new MemberManage();
 ```Java
  public void ManagerRun(Person person) { // 관리자
 	 while(true) {
-	 int op=scanner.nextInt();
-	 switch(op) {
-	 case(1): bookManage.printBookList();
-	 case(2):bookManage.AddBook();
-	 case(3):bookManage.UpdateBookStock();
-	 case(4):memberManage.PrintMemberList();
-	 case(5):break;
+		 System.out.println("----------------------------------------------------------------------------");
+		 System.out.println( "1. 전체 도서 목록 출력 | 2. 도서 등록 | 3. 도서 재고 추가 | 4. 회원 목록 보기 | 5. 돌아가기");
+		 System.out.println("----------------------------------------------------------------------------");
+		 System.out.print(">>");
+		 int op=scanner.nextInt();
+		 switch(op) {
+		 case(1): bookManage.printBookList();
+		 case(2): bookManage.AddBook();
+		 case(3): bookManage.UpdateBookStock();
+		 case(4): memberManage.PrintMemberList();
+		 case(5):break;
 	 }
 	 
 	 }
@@ -147,13 +166,18 @@ memberManage = new MemberManage();
 ```Java
  public void MemberRun(Person person) { // 회원
 	 Member m = new Member(person.getID(), person.getName(), person.getPassward());
-	 int op=scanner.nextInt();
-	 switch(op) {
-	 case(1): bookManage.printBookList();
-	 case(2): bookManage.RentalBook(m);
-	 case(3):bookManage.ReturnBook(m);
-	 case(4):m.PrintRentalList();
-	 case(5):break;
+	 while(true) {
+		 System.out.println("----------------------------------------------------------------------------");
+		 System.out.println( "1. 전체 도서 목록 출력 | 2. 도서 대여 | 3. 도서 반납 | 4. 대여 도서 목록 | 5. 돌아가기");
+		 System.out.println("----------------------------------------------------------------------------");
+		 int op=scanner.nextInt();
+		 switch(op) {
+		 case(1): bookManage.printBookList();
+		 case(2): bookManage.RentalBook(m);
+		 case(3): bookManage.ReturnBook(m);
+		 case(4): m.PrintRentalList();
+		 case(5):break;
+	 }
 	 }
  }
 ```
@@ -210,19 +234,115 @@ public class BookManage {
 
 #
 ### (F)
+저번에 사용했던 (C-2)코드와 비슷하다.
+```Java
+void printBookList() {
+	 Set<String> keys = bookHash.keySet();
+	 for(String i : keys) {
+		 System.out.println("도서 번호: "+bookHash.get(i).getBookNumber()+", 도서 명: "+bookHash.get(i).getName()+"도서 장르: "+bookHash.get(i).getGenre());
+	 }
+ } 
+```
 
 #
 ### (G)
-
+```Java
+ boolean AddBook() {
+	 System.out.print("책 번호 입력 >>");
+	 String book_number=scanner.next();
+	 if(bookHash.get(book_number)!=null) {
+		 System.out.print("책 제목 입력 >>");
+		 String book_name=scanner.next();
+		 System.out.print("책 장르 입력 >>");
+		 String book_genre=scanner.next();
+		 System.out.print("책 수량 입력 >>");
+		 int count=scanner.nextInt();
+		 if(count<0) {
+			 System.out.println("도서는 1개 이상일 때 추가됩니다.");
+			 return false;
+		 }
+		 bookHash.put(book_number, new Book(book_number,book_name,book_genre,count));
+		 return true;
+	 }
+	 else {
+		 System.out.println("이미 존재하는 도서번호입니다.");
+		 return false;
+	 } 
+ }
+```
 #
 ### (H)
 
+```Java
+ boolean UpdateBookStock() {
+	 System.out.print("책 번호 입력 >>");
+	 String book_number=scanner.next();
+	 if(bookHash.get(book_number)!=null) {
+		 System.out.print("책 수량 입력 >>");
+		 int count=scanner.nextInt();
+		 if(count<0) {
+			 System.out.println("입력값이 1개 이상일 때 추가됩니다.");
+			 return false;
+		 }
+		 bookHash.get(book_number).updateStock(count);
+		 return true;
+	 }
+	 else {
+		 System.out.println("존재하지 않는 도서번호입니다.");
+		 return false;
+	 }
+ }
+```
 #
 ### (I)
+```Java
+boolean ReturnBook(Member member) {
+	 System.out.print("반납할 도서 번호 입력 >>");
+	 String book_number=scanner.next();
+	 if(member.getbookHash().get(book_number)!=null) {
+		 bookHash.get(book_number).updateStock(1);
+		 member.getbookHash().remove(book_number);
+		 return true;
+	 }
+	 else {
+		 System.out.println("도서 번호가 일치하지 않거나 대여하지 않았습니다.");
+		 return false;
+	 }
+
+ }
+```
 
 #
 ### (J)
-
+조건문이 까다로웠다
+```Java
+boolean RentalBook(Member member) {
+	 System.out.print("대출할 도서 번호 입력 >>");
+	 String book_number=scanner.next();
+	 if(member.getbookHash().get(book_number)!=null) {
+		 System.out.println("이미 대여한 도서입니다.");
+		 return false;
+	 }
+	 else {
+		 if(bookHash.get(book_number)!=null) {
+			 if(bookHash.get(book_number).getStock()>=0) {
+			 member.bookHash.put(book_number, bookHash.get(book_number));
+			 bookHash.get(book_number).updateStock(-1);
+			 return true;
+			 }
+			 else {
+				 System.out.println("도서가 현재 전부 대여중입니다. \n나중에 이용해주세요.");
+				 return false;
+			 }
+		 }
+		 else {
+			 System.out.println("도서 번호가 일치하지 않거나 존재하지 않습니다.");
+			 return false;
+		 }
+	 }
+ }
+}
+```
 #
 
 ```Java
